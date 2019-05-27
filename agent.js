@@ -4,13 +4,15 @@ function Agent(x,y) {
 
     this.position = new Point2(x,y);
     this.initialPosition = this.position;
-
+    this.nextPositionToBe = this.position;
+    
     this.neighbors = [];
 
     this.graphicSizeParameter = 20;
 
 
-    this.show = function(){
+
+    this.showInitial = function(){
 
         noStroke();
 
@@ -24,11 +26,18 @@ function Agent(x,y) {
         textAlign(CENTER,CENTER);
         text((this.id+1).toString(),this.initialPosition.x,this.initialPosition.y,this.graphicSizeParameter,this.graphicSizeParameter);
 
+    }
+
+
+    this.show = function(){
+
+        noStroke();
+
         // state of the agent 
         fill(0);
         ellipse(this.position.x,this.position.y,this.graphicSizeParameter/2,this.graphicSizeParameter/2);
 
-         // label of the initial position
+         // label of the current position
         fill(255);
         rectMode(CENTER);
         textAlign(CENTER,CENTER);
@@ -60,6 +69,17 @@ function Agent(x,y) {
             return false;
         }
     }
+
+
+
+    this.computeUpdate = function(){
+        this.nextPositionToBe = this.position;
+    }
+
+    this.executeUpdate = function(){
+        this.position = this.nextPositionToBe;
+    }
+
 
 }
 

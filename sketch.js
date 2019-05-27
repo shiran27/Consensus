@@ -43,10 +43,22 @@ function draw() {
     // display
     showCommunicationLinks();
     for(var i = 0; i<agents.length; i++){
+        agents[i].showInitial();
+    }
+
+
+    if(simulationMode==1){
+        for(var i = 0; i<agents.length; i++){
+            agents[i].computeUpdate();
+        }
+        for(var i = 0; i<agents.length; i++){
+            agents[i].executeUpdate();
+        }
+    }
+
+    for(var i = 0; i<agents.length; i++){
         agents[i].show();
     }
-    
-
 
 
 

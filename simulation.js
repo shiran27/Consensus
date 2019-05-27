@@ -31,4 +31,35 @@ function refreshProblem(){
 	var N = agents.length;
 	var r = communicationRange;
 	generateProblem(N,r);
+	consolePrint("Problem configuration refreshed.")
+}
+
+
+function runSimulation(){
+	if(simulationMode == 1){
+		simulationMode = 0;
+		document.getElementById('runSimulationButton').innerHTML = "<i class='fa fa-play'></i>";
+		consolePrint("Consensus scheme paused.");
+	}else{
+		simulationMode = 1;
+		document.getElementById('runSimulationButton').innerHTML = "<i class='fa fa-pause'></i>";
+		consolePrint("Consensus scheme started.");
+	}
+}
+
+
+function stopSimulation(){
+	
+	simulationMode = 0;
+	for(var i = 0; i<agents.length; i++){
+		agents[i].position = agents[i].initialPosition;
+	}
+	document.getElementById('runSimulationButton').innerHTML = "<i class='fa fa-play'></i>";
+
+	consolePrint("Consensus scheme resetted to the initial condition.");
+}
+
+
+function refreshAll(){
+	location.reload();
 }

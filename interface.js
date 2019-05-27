@@ -1,10 +1,10 @@
 
 
 function initializeInterface(){
-	consolePrint("Simulation Started.");
+	consolePrint("Simulation started.");
 	communicationRange = Number(document.getElementById('communicationRange').value);
-
 	generateProblem(5,communicationRange);
+	consolePrint("Initial problem configuration loading finished.")
 }
 
 
