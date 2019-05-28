@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="libraries/plotly-latest.min.js"></script>
 	<script type="text/javascript" src="libraries/popper.min.js"></script>
 	<script type="text/javascript" src="libraries/fontawesome.js"></script>
-	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+	
 
 	
 
@@ -45,6 +45,7 @@
 	<script src="interface.js"></script>
 	<script src="agent.js"></script>
 	<script src="point2.js"></script>
+	<script src="mathTools.js"></script>
 	<!-- <script src="point2.js"></script>
 	
 	<script src="agent.js"></script>
@@ -53,9 +54,13 @@
 	<script src="plot.js"></script> -->
 
 
-  <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" type="text/css" href="libraries/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="libraries/bootstrap-toggle.min.css">
 	
+
+
+	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 	
 
 
@@ -73,11 +78,27 @@
 	        
 			<h2 align="center"> Distributed Consensus Problem </h2>
 
+			<div class="row">
+				<div class="col col-lg-6">
+					<h2 align="center">
+						<img src="Picture1.png" width="450pt">	
+					</h2>
+				</div>
+				<div class="col col-lg-6">
+					<h2 align="center">
+						<img src="Picture2.png" width="450pt">	
+					</h2>
+				</div>
+			</div>
 
-			<h2 align="center">
-				<img src="ConsensusPic.png" width="400pt">
-			</h2>
-
+			<div class="row">
+				<div class="col col-lg-12">
+					<h2 align="center">
+						<img src="Picture3.png" width="700pt">	
+					</h2>
+				</div>
+			</div>
+			
 		</div>
 	
 	</div>
@@ -120,7 +141,7 @@
 									<button class="btn btn-success" type="button" onclick="addAnAgent();" id="addAnAgentButton">
 											<i class="fa fa-plus"></i>
 									</button>
-									<button class="btn btn-warning" type="button" onclick="removeAnAgent();" id="removeAnAgentButton">
+									<button class="btn btn-danger" type="button" onclick="removeAnAgent();" id="removeAnAgentButton">
 											<i class="fa fa-minus"></i>
 									</button>
 
@@ -147,6 +168,7 @@
 									<button class="btn btn-success" type="button" onclick="runSimulation();" id="runSimulationButton">
 											<i class="fa fa-play"></i>
 									</button>
+
 									<button class="btn btn-warning" type="button" onclick="stopSimulation();" id="stopSimulationButton">
 											<i class="fa fa-stop"></i>
 									</button>
@@ -174,14 +196,35 @@
 			
 			<div class="col col-lg-6" id="canvasHolder"></div>
 			
+			<div id="blankColumn" class="col">
+				
+			</div>
+
+			<div class="col col-lg-5">
 			
+				<div class="row">
+					<div class="col col-lg-12">
+						<label for="stepSizeMethodSelectCheckBox">Step size method (Toggle):</label>
+						<input type="checkbox" data-toggle="toggle" data-on="Variable" data-off="Constant" data-onstyle="success" data-offstyle="danger" id="stepSizeMethodSelectCheckBox" onchange="stepSizeMethodSelectCheckBoxChanged();">
+					</div>
+				</div>
+
+
+
+				<div class="row">
+					<div class="col col-lg-12" id="myPlot1"></div>
+				</div>
+
+				<div class="row">
+					<div class="col col-lg-12" id="myPlot2"></div>
+				</div>
+
+			</div>
+
+
+
 		</div>
 
-		<div class="row">
-	
-			<div class="col col-lg-6" id="myPlot1"></div>		
-			
-		</div>
 
 	</div>		
 
@@ -194,6 +237,7 @@
 	<script src="libraries/jquery-3.3.1.js" type="text/javascript"></script>
 
 	<script type="text/javascript" src="libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="libraries/bootstrap-toggle.min.js"></script>
 
 </body>
 

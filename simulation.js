@@ -9,8 +9,11 @@ var queueLengthArray = [5,6,7,8];
 
 var agents = [];
 var communicationRange;
+var derivativeSumForConvergenceCheck;
+var numberOfIterationsToConvergence = 0;
 
-
+var stepSizeSelectionMethod = false;
+var simulationAccuracyLevel = 0.001;
 
 function generateProblem(N,r){
 
@@ -47,9 +50,17 @@ function runSimulation(){
 	}
 }
 
+function finishSimulation(){
+	simulationMode = 0;
+	document.getElementById('runSimulationButton').innerHTML = "<i class='fa fa-play'></i>";
+	consolePrint("Consensus reached after "+numberOfIterationsToConvergence+" iterations.");
+}
+
 
 function stopSimulation(){
 	
+	numberOfIterationsToConvergence = 0;
+
 	simulationMode = 0;
 	for(var i = 0; i<agents.length; i++){
 		agents[i].position = agents[i].initialPosition;
@@ -62,4 +73,12 @@ function stopSimulation(){
 
 function refreshAll(){
 	location.reload();
+}
+
+function computeObjectiveFunction(){
+	var result = 0;
+	for(var i = 0; i<agents.length; i++){
+		result = result + agents[i].getTotalSensingCapability();
+	}
+	return -1*result;
 }

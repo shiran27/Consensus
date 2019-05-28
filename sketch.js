@@ -48,12 +48,25 @@ function draw() {
 
 
     if(simulationMode==1){
+        
+        derivativeSumForConvergenceCheck = 0; // to check the convergence
         for(var i = 0; i<agents.length; i++){
-            agents[i].computeUpdate();
+            agents[i].computeUpdate(); // derivative sum is updated inside as well as the next position to be
         }
-        for(var i = 0; i<agents.length; i++){
-            agents[i].executeUpdate();
+        derivativeSumForConvergenceCheck = Math.sqrt(derivativeSumForConvergenceCheck);
+        
+
+
+        if(derivativeSumForConvergenceCheck<simulationAccuracyLevel){
+            finishSimulation();
+        }else{
+            for(var i = 0; i<agents.length; i++){
+                agents[i].executeUpdate();
+            }
+            numberOfIterationsToConvergence++;
         }
+
+        
     }
 
     for(var i = 0; i<agents.length; i++){
@@ -85,6 +98,11 @@ function mouseDragged(){
     if(agentDraggingMode==1){
         agents[agentDragging].initialPosition = new Point2(mouseX,mouseY);
         agents[agentDragging].position = agents[agentDragging].initialPosition;
+
+        for(var i = 0; i<agents.length; i++){// reset all agent positions to the initial position
+            agents[i].position = agents[i].initialPosition;
+        }
+        
         updateAgentNeighbors();
     }else if(agentDraggingMode==2){
         agents[agentDragging].position = new Point2(mouseX,mouseY);
@@ -93,9 +111,14 @@ function mouseDragged(){
             if(agents[i].clickedOnInitial()){
                 agentDragging = i;
                 agentDraggingMode = 1;
+                
+                if(simulationMode==1){simulationMode=3;}; // temporary halt
+                
             }else if(agents[i].clicked()){
                 agentDragging = i;
                 agentDraggingMode = 2;
+
+                if(simulationMode==1){simulationMode=3;}; // temporary halt
             }
         }    
     }
@@ -107,16 +130,27 @@ function mouseDragged(){
 
 function mouseReleased(){
 
-    if(agentDraggingMode==1){
+    if(agentDraggingMode==1){// initial position is changed
         agents[agentDragging].initialPosition = new Point2(mouseX,mouseY);
         agents[agentDragging].position = agents[agentDragging].initialPosition;
+
+        for(var i = 0; i<agents.length; i++){// reset all agent positions to the initial position
+            agents[i].position = agents[i].initialPosition;
+        }
+
         updateAgentNeighbors();
         agentDraggingMode = 0;
         consolePrint("Agent "+(agentDragging+1)+"(initial) dragging finished.");
+        
+        if(simulationMode==3){simulationMode=1;numberOfIterationsToConvergence = 0;};
+    
     }else if(agentDraggingMode==2){
         agents[agentDragging].position = new Point2(mouseX,mouseY);
         agentDraggingMode = 0;
         consolePrint("Agent "+(agentDragging+1)+" dragging finished.");
+
+        if(simulationMode==3){simulationMode=1;numberOfIterationsToConvergence = 0;};
+
     }
     
 }
